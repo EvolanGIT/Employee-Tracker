@@ -19,7 +19,7 @@ CREATE TABLE roles(
     ON DELETE CASCADE
 );
 
-CREATE TABLE employeee (
+CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
