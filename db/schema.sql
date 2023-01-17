@@ -1,4 +1,6 @@
 DROP DATABASE IF EXISTS personel_db;
+DROP TABLE IF EXISTS department;
+DROP TABLE 
 CREATE DATABASE personel_db;
 
 USE personel_db;
