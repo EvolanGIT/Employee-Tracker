@@ -2,12 +2,12 @@
 const mysql = require("mysql2");
 const cTable = require("console.table");
 const inquirer = require("inquirer");
-const db = require("./connection/connect.js");
+const db = require("./config/connection.js");
 
 
 // this object starts the whole tracker.
 const questions = () => {
-    return inquirer.prompt([
+     inquirer.prompt([
     {
         type: 'list',
         name: 'Start',
@@ -18,13 +18,13 @@ const questions = () => {
     .then((data) => {
     switch (data.Start) {
         case 'View All Employees':
-            viewEmp();
+            return viewEmp();
         case 'Add Employee':
-            addEmp();
+            return addEmp();
         case 'Update Employee Role':
-            updateEmpRole();
+            return updateEmpRole();
         case 'View All Roles':
-            viewRoles();
+            return viewRoles();
         case 'Add Role':
             addRole();
         case 'View All Departments':
@@ -32,7 +32,7 @@ const questions = () => {
         case 'Add Department':
             addDept();
         case 'Quit':
-            db.quit();
+            db.end();
             return
     }})
     .catch((err) => {
@@ -42,7 +42,7 @@ const questions = () => {
 
 // View Employees
 function viewEmp() {
-    db.query('SELECT * from employee;', (err, results) =>{
+    db.query("SELECT e1.id, e1.first_name, e1.last_name, roles.title, department.title AS Department, roles.salary, CONCAT(e2.first_name, ' ', e2.last_name) AS Manager FROM employee e1 JOIN roles ON e1.roles.id = roles.id JOIN department ON roles.department.id = department.id LEFT JOIN employee e2 ON e1.manager.id = e2.id;", (err, results) =>{
         if (err) throw err;
         console.table(results);
         questions();
@@ -51,7 +51,7 @@ function viewEmp() {
 
 // View Roles
 function viewRoles() {
-    db.query('SELECT roles.id, roles.title, roles.salary, department.name AS Department FROM roles INNER JOIN department ON roles.department_id = department.id;', 
+    db.query('SELECT roles.id, roles.title, roles.salary, department.title AS Department FROM roles INNER JOIN department ON roles.department_id = department.id;', 
     (err, results) =>{
         if (err) throw err;
         console.table(results);
@@ -80,7 +80,7 @@ function addEmp() {
         });
         empLi.push({name: "None", value: "null"});
         db.query('SELECT id, title FROM roles', (err,results) => {
-            roleList = results.map((role) =>{
+            roleLi = results.map((role) =>{
                 return {
                     name: role.title,
                     value: role.id
@@ -102,7 +102,7 @@ function addEmp() {
                 type: "list",
                 message: "Employee's Role?",
                 name: "employeeRole",
-                choices: roleList,
+                choices: roleLi,
             },
             {
                 type: "list",
@@ -170,14 +170,14 @@ function addRole() {
 
 // This function adds a new Department to the database.
 function addDept() {
-    inquirer.prompt [(
+    inquirer.prompt ([
         {
             type: 'input',
             name: 'newDept',
             message: "Please Specify the new Department's name"
         }
-    )]
-    then((data) =>{
+    ])
+    .then((data) =>{
         let newDept = data;
         let { department } = newDept;
     db.query (
@@ -232,4 +232,4 @@ function updateEmpRole() {
 });
 }
 
-questions;
+questions();
