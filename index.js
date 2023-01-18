@@ -18,19 +18,26 @@ const questions = () => {
     .then((data) => {
     switch (data.Start) {
         case 'View All Employees':
-            return viewEmp();
+        viewEmp();
+        break
         case 'Add Employee':
-            return addEmp();
+        addEmp();
+        break
         case 'Update Employee Role':
-            return updateEmpRole();
+        updateEmpRole();
+        break
         case 'View All Roles':
-            return viewRoles();
+        viewRoles();
+        break
         case 'Add Role':
-            addRole();
+        addRole();
+        break
         case 'View All Departments':
-            viewDept();
+        viewDept();
+        break
         case 'Add Department':
-            addDept();
+        addDept();
+        break
         case 'Quit':
             db.end();
             return
@@ -120,7 +127,7 @@ function addEmp() {
             {
                 first_name: firstName,
                 last_name: lastName,
-                roles_id: newEmp.employeeRole,
+                role_id: newEmp.employeeRole,
                 manager_Id: newEmp.empManager
             },
             (err,results) => {
@@ -182,12 +189,11 @@ function addDept() {
         }
     ])
     .then((data) =>{
-        let newDept = data;
-        let { department } = newDept;
+        let { newDept } = data;
     db.query (
         "INSERT INTO department SET ?",
         { 
-        title: department 
+        title: newDept 
         },
         function (err, results) {
         console.table(results);
