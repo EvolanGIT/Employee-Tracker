@@ -14,7 +14,7 @@
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![MYSQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
 
-## Table of Contents (Optional)
+## Table of Contents
 
 - [Access](#access)
 - [Visuals](#visuals)
@@ -26,7 +26,7 @@
 
 ## Access
 
-## Link to the Walkthrough video [**HERE**](./public/assets/images/EmpTrackSS.jpg)
+## Link to the Walkthrough video [**HERE**](https://www.youtube.com/watch?v=nbEXODdxJro)
 
 ## Visuals
 

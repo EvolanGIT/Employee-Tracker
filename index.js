@@ -7,7 +7,7 @@ const db = require("./config/connection.js");
 
 // this object starts the whole tracker.
 const questions = () => {
-     inquirer.prompt([
+    inquirer.prompt([
     {
         type: 'list',
         name: 'Start',
